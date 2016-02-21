@@ -135,31 +135,6 @@ extern int decon_log_level;
 	} while (0)
 
 /* declare these structs if decon event logging is disabled */
-#ifndef CONFIG_DECON_EVENT_LOG
-struct esd_protect {
-	u32 pcd_irq;
-	u32 err_irq;
-	u32 disp_det_irq;
-	u32 pcd_gpio;
-	u32 disp_det_gpio;
-	struct workqueue_struct *esd_wq;
-	struct work_struct esd_work;
-	u32	queuework_pending;
-};
-
-struct disp_ss_size_info {
-	u32 w_in;
-	u32 h_in;
-	u32 w_out;
-	u32 h_out;
-};
-
-struct disp_ss_size_err_info {
-	ktime_t time;
-	struct disp_ss_size_info info;
-};
-#endif
-
 /*
  * DECON_STATE_ON : disp power on, decon/dsim clock on & lcd on
  * DECON_STATE_LPD_ENT_REQ : disp power on, decon/dsim clock on, lcd on & request for LPD
@@ -512,7 +487,6 @@ struct decon_underrun_stat {
 	unsigned long used_windows;
 };
 
-#ifdef CONFIG_DECON_EVENT_LOG
 /**
  * Display Subsystem event management status.
  *
@@ -697,7 +671,7 @@ void DISP_SS_EVENT_LOG_DECON_FRAMEDONE(struct v4l2_subdev *sd,
 void DISP_SS_EVENT_LOG_DSIM_FRAMEDONE(struct v4l2_subdev *sd,
 			struct disp_log_decon_frm_done* decon_sfr);
 void DISP_SS_EVENT_SIZE_ERR_LOG(struct v4l2_subdev *sd, struct disp_ss_size_info *info);
-#else /*!*/
+/*!*/
 #define DISP_SS_EVENT_START(...) do { } while(0)
 #define DISP_SS_EVENT_LOG(...) do { } while(0)
 #define DISP_SS_EVENT_LOG_WINCON(...) do { } while(0)
@@ -705,7 +679,6 @@ void DISP_SS_EVENT_SIZE_ERR_LOG(struct v4l2_subdev *sd, struct disp_ss_size_info
 #define DISP_SS_EVENT_LOG_CMD(...) do { } while(0)
 #define DISP_SS_EVENT_SHOW(...) do { } while(0)
 #define DISP_SS_EVENT_SIZE_ERR_LOG(...) do { } while(0)
-#endif
 
 /**
 * END of CONFIG_DECON_EVENT_LOG

@@ -147,8 +147,6 @@ static void tracing_mark_write( int pid, char id, char* str1, int value )
 		decon_err( "%s:argument fail\n", __func__ );
 		return;
 	}
-
-	trace_puts(buf);
 }
 /*-----------------------------------------------------------------*/
 
